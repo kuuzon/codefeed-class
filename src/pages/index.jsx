@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 import Head from 'next/head';
 import Hero from '@/components/layout/Hero';
+import ArticleList from '@/components/feature/articles/ArticleList';
 
-function HomePage() {
+function HomePage({ articles }) {
   return (
     <Fragment>
       <Head>
@@ -18,6 +19,8 @@ function HomePage() {
         description='Catch up on all the coding news from around the globe!'
         bgImage='/backgrounds/hero-code.webp'
       />
+      {/* Custom API Articles */}
+      {articles.length > 0 && <ArticleList articles={articles} />}
     </Fragment>
   )
 }
