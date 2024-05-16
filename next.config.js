@@ -31,8 +31,8 @@ module.exports = (phase) => {
 
   const env = {
     SERVER_NAME: (() => {
-      if (isDev) return 'http://localhost:3000/'
-      if (isProd) return 'https://YOUR-DOMAIN-HERE.vercel.app/'
+      if (isDev) return process.env.SERVER_URI_DEV
+      if (isProd) return process.env.SERVER_URI_PROD
     })(),
     NEWS_API_KEY: process.env.NEWS_API_KEY,
   }
