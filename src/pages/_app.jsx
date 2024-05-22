@@ -1,10 +1,33 @@
-import '@/styles/scss/main.scss'
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
+
+import '@/styles/scss/main.scss'
+import { useRouter } from 'next/router';
+import * as ga from '../lib/google-analytics'
 import Layout from '@/components/layout';
 
 function App({ Component, pageProps }) {
+  // LOGIC
+  // SETUP TRIGGER FOR GA PAGE INFO ON PAGE CHANGE
+  const router = useRouter();
+  useEffect(() => {
+    // 1. Function to pass changed URL to our GA pageview function
+    const handleRouteChange = (url) => {
+      ga.pageview(url);
+    }
+
+    // 2. Call the above function when URL path changes (i.e. user navigates to another page)
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    // 3. Cleanup function - when user navigates away from page
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+
+  }, [router.events]);
+
+  // TEMPLATE
   return (
     <Fragment>
       {/* GA Scripts */}
